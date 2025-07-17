@@ -77,25 +77,3 @@ index ddfe4e866b2f..d3af2f493972 100755
  
      if (shouldUseVcpkg()) {
          push @args, '-DCMAKE_TOOLCHAIN_FILE="' . $ENV{VCPKG_ROOT} . '\\scripts\\buildsystems\\vcpkg.cmake"';
-diff --git a/Source/WTF/wtf/Vector.h b/Source/WTF/wtf/Vector.h
-index 745ada5868bb..013ca73d0887 100644
---- a/Source/WTF/wtf/Vector.h
-+++ b/Source/WTF/wtf/Vector.h
-@@ -859,6 +859,8 @@ public:
- 
-     T& operator[](size_t i) LIFETIME_BOUND { return at(i); }
-     const T& operator[](size_t i) const LIFETIME_BOUND { return at(i); }
-+    T* data() LIFETIME_BOUND { return Base::buffer(); }
-+    const T* data() const LIFETIME_BOUND { return Base::buffer(); }
- 
-     static constexpr ptrdiff_t dataMemoryOffset() { return Base::bufferMemoryOffset(); }
- 
-@@ -1029,8 +1031,6 @@ private:
-         new (NotNull, begin() + position) T(std::forward<U>(value));
-     }
- 
--    T* data() LIFETIME_BOUND { return Base::buffer(); }
--    const T* data() const LIFETIME_BOUND { return Base::buffer(); }
- 
-     void asanSetInitialBufferSizeTo(size_t);
-     void asanSetBufferSizeToFullCapacity(size_t);
